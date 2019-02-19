@@ -1,0 +1,40 @@
+// Simple Arithmetics Grammar
+// ==========================
+//
+// Accepts expressions like "2 * (3 + 4)" and computes their value.
+
+Expression
+  = head:Term tail:(_ ("+" / "-") _ Term)* {
+      return tail.reduce(function(result, element) {
+      	return { op: element[1], args: [result, element[3]] }
+      }, head);
+    }
+
+Term
+  = head:Factor tail:(_ ("*" / "/") _ Factor)* {
+      return tail.reduce(function(result, element) {
+       return { op: element[1], args: [result, element[3] ]}
+      }, head);
+    }
+
+Dice "dice" = count:Integer "d" sides:Integer {
+	return { op: "dice", sides: sides, count:count };
+} / "d" sides:Integer {
+	return { op: "dice", sides: sides, count:{ value: 1} };
+}
+
+
+Factor
+  = "(" _ expr:Expression _ ")" { return expr; }
+/ Dice
+/ Integer
+
+
+
+Integer "integer"
+  = _ [0-9]+ { return  { value: parseInt(text(), 10) } }
+
+_ "whitespace"
+  = [ \t\n\r]*
+
+              

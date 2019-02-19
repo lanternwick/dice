@@ -1,0 +1,141 @@
+body{
+    /* max-width: 230px; */
+    /* max-height: 409px; */
+    height: 100%;
+    width:100%;
+    background: black;
+    color: white;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 2em 3em auto;
+    margin: 0;
+    font-family: sans-serif;
+    position: fixed;
+    font-size: 18px;
+}
+
+.header-formula,
+.header-result {
+    /* display: flex; */
+    /* width: 100%; */
+    /* flex:0 0 auto; */
+}
+
+input {
+    border: none;
+    margin: 0;
+    background: none;
+    color: white;
+}
+
+.header {
+    grid-column-start: span 4;
+    text-align: right;
+}
+
+#formula {
+    font-size: 16px;
+    background: rgb(39, 39, 39);
+}
+
+#result-formula {
+    /* flex: 1 1 auto; */
+    /* grid-column-start: span 3; */
+    /* text-align: right; */
+
+    /* background: rgb(44, 44, 44); */
+}
+
+.header-result {
+    text-align: right;
+    background: rgb(44, 44, 44);
+}
+
+#result {
+    display: inline-block;
+    width: 25%;
+    text-align: center;
+    font-size: 2em;
+
+
+}
+
+.input {
+    display:grid;
+
+    flex: 1 1 auto;
+}
+
+.action-r {
+    grid-row-start: span 2;
+}
+
+button {
+    margin: 0;
+    border: none;
+    font-size: 1rem;
+
+}
+
+svg {
+    width: 1rem;
+    height: 1rem;
+    fill: currentcolor;
+}
+
+.preset {
+    background: rgb(204, 204, 204);
+    color: black;
+}
+
+.preset:active {
+    background: rgb(214,214,214);
+}
+
+.action {
+    background: rgb(195, 54, 38);
+    color: white;
+}
+
+.action:active {
+    background: rgb(233, 65, 45)
+}
+
+.op {
+    font-weight: bold;
+    font-size: 1em;
+    color: white;
+    background: rgb(249, 164, 73);
+}
+
+.op:active{
+    background: rgb(255, 168, 75);
+}
+
+.num {
+    color: black;
+    background: rgb(213, 213, 213);
+}
+
+.num:active {
+    background: rgb(227,227, 277);
+}
+
+.action-r {
+    color: white;
+    background: rgb(248, 156, 63);
+}
+
+.action-r:active{
+    background: rgb(255, 168, 75);
+}
+
+
+.paren {
+    color: black;
+    background: rgb(204, 204, 204);
+}
+
+.paren:active {
+    background: rgb(214,214,214);
+}
