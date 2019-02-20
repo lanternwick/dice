@@ -35,7 +35,7 @@ document.querySelector('#clear').addEventListener('click', function() {
 
 document.querySelector('#delete').addEventListener('click', function() {
     var val = document.querySelector('#formula').value;
-    document.querySelector('#formula').value = val.substr(0, val.length-1);
+    document.querySelector('#formula').value = val.substr(0, val.length-1).trim();
 });
 
 var ops = {
@@ -75,14 +75,26 @@ function diceop(expr) {
 	result.push(roll(sides));
     }
 
-    var value = result.reduce(function (m, a) { return m + a; });
+    var value = result.reduce(function (m, a) { return m + a; }, 0);
 
+    var resultStr = formatDice(result);
+    
     return {
 	value: value,
-	str: '(' + result.join(' + ') + ')'
+	str: resultStr
     };
 }
 
+function formatDice(results) {
+    if(results.length === 0) {
+	return '0';
+    } else if(results.length === 1) {
+	return results[0];
+    } else {
+	return '(' + results.join(' + ') + ')';
+    }
+}
+
 function roll(sides) {
-    return Math.floor(Math.random() * sides) + 1;
+    return Math.floor(Math.random() * sides) + (sides === 0 ? 0 : 1);
 }
