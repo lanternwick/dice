@@ -53,10 +53,9 @@ input {
 
 #result {
     display: inline-block;
-    width: 25%;
     text-align: center;
     font-size: 2em;
-
+    margin: 0em 0.5em;
 
 }
 
