@@ -12,12 +12,15 @@ document.querySelector('#roll').addEventListener('click', function() {
 	console.log(parsedExpr);
 	var result = evalExpr(parsedExpr);
 
-	document.querySelector('#result-formula').innerText = result.str + ' =';
+	document.querySelector('#result-formula').innerText = result.str;
 	document.querySelector('#result').innerText = result.value;
     } catch(e) {
 	document.querySelector('#result-formula').innerText = e.message;
 	document.querySelector('#result').innerText = 'E';
     }
+
+    document.querySelector('#result-header').classList.add('have-result');
+    
 });
 
 
@@ -31,6 +34,7 @@ document.querySelector('#clear').addEventListener('click', function() {
     document.querySelector('#formula').value = '';
     document.querySelector('#result-formula').innerText = '';
     document.querySelector('#result').innerText = '';
+    document.querySelector('#result-header').classList.remove('have-result');
 });
 
 document.querySelector('#delete').addEventListener('click', function() {
