@@ -1,4 +1,4 @@
-var CACHE_VERSION = 17;
+var CACHE_VERSION = 18;
 
 // Shorthand identifier mapped to specific versioned cache.
 var CURRENT_CACHES = {
