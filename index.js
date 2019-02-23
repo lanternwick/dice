@@ -1,7 +1,9 @@
 
-navigator.serviceWorker
-    .register('sw.js')
-    .then(function() { console.log("Service Worker Registered"); });
+if(navigator.serviceWorker) {
+    navigator.serviceWorker
+	.register('sw.js')
+	.then(function() { console.log("Service Worker Registered"); });
+}
 
 document.querySelector('#roll').addEventListener('click', function() {
     var expr = document.querySelector('#formula').value;
