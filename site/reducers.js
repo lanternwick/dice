@@ -1,5 +1,7 @@
 (function(exports) {
 
+    var MAX_RECENT_ELEMENTS = 5;
+    
     function hasResult(state, action) {
 	switch(action.type) {
 	case "RESULT_GENERATED":
@@ -59,12 +61,12 @@
 		// The expression is already in the list, so copy the
 		// existing list and remove it from it's current
 		// position
-		newState = state.slice();
+		newState = state.slice(0, MAX_RECENT_ELEMENTS);
 		newState.splice(index, 1);
 		
 	    } else {
 		// Otherwise make a copy of the current state, but truncate.
-		newState = state.slice(0, 9);
+		newState = state.slice(0, MAX_RECENT_ELEMENTS-1);
 	    }
 
 	    // Insert the expression at the front of the new list.

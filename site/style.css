@@ -63,9 +63,11 @@ input {
     display: block;
     color: currentcolor;
     text-decoration: none;
+    padding: 4px;
+    font-size: 20px;
 }
 
-
+.recent-list:active,
 #recent-list:focus,
 #recent-list:active,
 #recent-list *:focus,
