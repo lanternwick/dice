@@ -6,12 +6,21 @@
     <link rel="apple-touch-icon" href="Icon-60@3x.png">
     <link rel="stylesheet" type="text/css" href="style.css">
     <!-- iPhone SE (640px x 1136px) --> 
-    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" href="/Splash-640-1136.png"> 
+    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" href="/Splash-640-1136.png">
+
+    <template id="recent-formula">
+      <li><a class="recent-item content" href="#"></a></li>
+    </template>
   </head>
   
   <body ontouchstart="">
-    <input class="header" id="formula" value="">
-
+    <div class="header formula-header">
+      <input id="formula" value="">
+      <div class="recent-list">
+	<ul id="recent-list">
+	</ul>
+      </div>
+    </div>
     <div class="header header-result" id="result-header">
       <span class="result-item header" id="result-formula"></span><span class="result-item fixed">=</span><span class="result-item fixed header" id="result"></span>
     </div>

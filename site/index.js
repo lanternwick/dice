@@ -38,12 +38,39 @@ function redisplay() {
     document.querySelector('#formula').value = state.input;
 
     // The last result if there was one.
-    document.querySelector('#result-formula').innerText = state.resultFormula;
+    document.querySelector('#result-formula').textContent = state.resultFormula;
     // The value of the last result.
-    document.querySelector('#result').innerText = state.resultValue;
+    document.querySelector('#result').textContent = state.resultValue;
 
     // Update the class if we have a result or not.
     document.querySelector('#result-header').classList.toggle('have-result', state.hasResult);
+
+    // Update the recent rolls list
+    var recentList = document.querySelector('#recent-list');
+
+    // Remove all existing children
+    while(recentList.firstChild) {
+	recentList.removeChild(recentList.firstChild);
+    }
+
+    // Get the recent item template
+    var template = document.querySelector('#recent-formula');
+
+    // Update the list
+    state.recentRolls
+	.map(
+	    function(rollExpr) {
+		// Create a new item node, and set it's content value.
+		var node = document.importNode(template.content, true);
+		node.querySelector('.content').textContent = rollExpr;
+
+		return node;
+	    })
+	.forEach(
+	    function(element) {
+		// Add the item to the list
+		recentList.appendChild(element);
+	    });
 }
 
 // Store the state back into local storage.
@@ -70,10 +97,15 @@ document.querySelector('#roll').addEventListener('click', function() {
 
 	// Update the store with the results
 	store.dispatch(DiceActions.resultGenerated(result.value, result.str));
+
+	// Update the recent rolls list with the successful roll.
+	store.dispatch(DiceActions.recentRoll(expr));
 	
     } catch(e) {
 	// If we get an error evaluating the state, show an error message.
 	store.dispatch(DiceActions.resultGenerated('E', e.message));
+
+	// We don't update the recent rolls list.
     }    
 });
 
@@ -103,6 +135,15 @@ document.querySelector('#clear').addEventListener('click', function() {
 document.querySelector('#delete').addEventListener('click', function() {
     // Remove the last element from the input.
     store.dispatch(DiceActions.deleteInput());
+});
+
+// Handle clicks on recent items.
+document.querySelector('#recent-list').addEventListener('click', function(event) {
+    // If the user clicked on an item, then handle it.
+    if(event.target.classList.contains('recent-item')) {
+	// Update the current input with the selected item.
+	store.dispatch(DiceActions.assignInput(event.target.textContent));
+    }
 });
 
 // Define the operations that are valid in expressions.

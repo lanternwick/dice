@@ -33,11 +33,19 @@
 	    type: "DELETE_INPUT"
 	};
     }
+
+    function recentRoll(expression) {
+	return {
+	    type: "RECENT_ROLL",
+	    expression: expression
+	};
+    }
     
     exports.resultGenerated = resultGenerated;
     exports.clear = clear;
     exports.appendToInput = appendToInput;
     exports.assignInput = assignInput;
     exports.deleteInput = deleteInput;
-
+    exports.recentRoll = recentRoll;
+    
 }(window.DiceActions = {}));
