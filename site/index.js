@@ -5,6 +5,22 @@ if(navigator.serviceWorker) {
 	.then(function() { console.log("Service Worker Registered"); });
 }
 
+var store = Redux.createStore(Redux.combineReducers(window.DiceReducers));
+
+store.subscribe(
+    function() {
+	var state = store.getState();
+
+	console.log(state);
+	
+	document.querySelector('#formula').value = state.input;
+	document.querySelector('#result-formula').innerText = state.resultFormula;
+	document.querySelector('#result').innerText = state.resultValue;
+
+	document.querySelector('#result-header').classList.toggle('have-result', state.hasResult);
+	
+    });
+
 document.querySelector('#roll').addEventListener('click', function() {
     var expr = document.querySelector('#formula').value;
 
@@ -14,34 +30,32 @@ document.querySelector('#roll').addEventListener('click', function() {
 	console.log(parsedExpr);
 	var result = evalExpr(parsedExpr);
 
-	document.querySelector('#result-formula').innerText = result.str;
-	document.querySelector('#result').innerText = result.value;
+	store.dispatch(DiceActions.resultGenerated(result.value, result.str));
+	
     } catch(e) {
-	document.querySelector('#result-formula').innerText = e.message;
-	document.querySelector('#result').innerText = 'E';
-    }
 
-    document.querySelector('#result-header').classList.add('have-result');
-    
+	store.dispatch(DiceActions.resultGenerated('E', e.message));
+    }    
 });
 
+document.querySelector('#formula').addEventListener(
+    'change',
+    function(event) {
+	store.dispatch(DiceActions.assignInput(event.target.value));
+    });
 
 document.querySelectorAll('.bind-value').forEach(function(el) {
     el.addEventListener('click', function() {
-	document.querySelector('#formula').value = document.querySelector('#formula').value + el.value;
+	store.dispatch(DiceActions.appendToInput(el.value));
     });
 });
 
 document.querySelector('#clear').addEventListener('click', function() {
-    document.querySelector('#formula').value = '';
-    document.querySelector('#result-formula').innerText = '';
-    document.querySelector('#result').innerText = '';
-    document.querySelector('#result-header').classList.remove('have-result');
+    store.dispatch(DiceActions.clear());
 });
 
 document.querySelector('#delete').addEventListener('click', function() {
-    var val = document.querySelector('#formula').value;
-    document.querySelector('#formula').value = val.substr(0, val.length-1).trim();
+    store.dispatch(DiceActions.deleteInput());
 });
 
 var ops = {

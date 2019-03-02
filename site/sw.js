@@ -1,4 +1,4 @@
-var CACHE_VERSION = 20;
+var CACHE_VERSION = 21;
 
 // Shorthand identifier mapped to specific versioned cache.
 var CURRENT_CACHES = {
@@ -13,6 +13,9 @@ self.addEventListener('install', function(event) {
 		    '/',
 		    '/index.html',
 		    '/style.css',
+		    'https://unpkg.com/redux@4.0.1/dist/redux.min.js',
+		    '/reducers.js',
+		    '/actions.js',
 		    '/index.js',
 		    '/parser.js'
 		]);
@@ -34,6 +37,8 @@ self.addEventListener('activate', function(event) {
 				console.log('Deleting out of date cache:', cacheName);
             
 				return caches.delete(cacheName);
+			    } else {
+				return undefined;
 			    }
 			}));
 	    }));
@@ -50,6 +55,13 @@ self.addEventListener('fetch', function(event) {
         if (response) {
           console.log('Found response in cache:', response);
 
+	  console.log('Fetching request from the network for cache update');
+
+	  fetch(event.request).then(function(networkResponse) {
+	    cache.put(event.request, networkResponse.clone());
+	    return;
+	  });
+	    
           return response;
         }
 
