@@ -111,7 +111,8 @@ var ops = {
     '-': binop('-', function (a, b) { return a - b; }),
     '*': binop('*', function (a, b) { return a * b; }),
     '/': binop('/', function (a, b) { return a / b; }),
-    'dice': diceop
+    'dice': diceop,
+    'parens': parensop
 };
 
 function ExprResult(value, str) {
@@ -144,8 +145,16 @@ function binop(op, fn) {
 	// Return an expression result with the result value and stringified representation.
 	return new ExprResult(
 	    result,
-	    '(' + left.str + ' ' + op + ' ' + right.str + ')');
+	    left.str + ' ' + op + ' ' + right.str);
     };
+}
+
+function parensop(expr) {
+    var result = evalExpr(expr.expr);
+    
+    return new ExprResult(
+	result.value,
+	'(' + result.str + ')');
 }
 
 // A function that evaluates a dice expression.

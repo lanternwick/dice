@@ -25,7 +25,7 @@ Dice "dice" = count:Integer "d" sides:Integer {
 
 
 Factor
-  = "(" _ expr:Expression _ ")" { return expr; }
+  = "(" _ expr:Expression _ ")" { return { op: 'parens', expr: expr }; }
 / Dice
 / Integer
 
