@@ -108,7 +108,7 @@ document.querySelector('#roll').addEventListener('click', function() {
 	
     } catch(e) {
 	// If we get an error evaluating the state, show an error message.
-	store.dispatch(DiceActions.resultGenerated('E', e.message));
+	store.dispatch(DiceActions.resultGenerated('E', e.message, state.resultValue));
 
 	// We don't update the recent rolls list.
     }    
