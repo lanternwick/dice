@@ -35,6 +35,17 @@
 	}
     }
 
+    function previousResult(state, action) {
+	switch(action.type){
+	case "RESULT_GENERATED":
+	    return action.previousValue;
+	// case "CLEAR":
+	//     return '';
+	default:
+	    return state || null;
+	}
+    }
+    
     function input(state, action) {
 	switch(action.type) {
 	case "APPEND_TO_INPUT":
@@ -53,6 +64,12 @@
     function recentRolls(state, action) {
 	switch(action.type) {
 	case "RECENT_ROLL":
+	    return doRecentRoll(state, action);
+	default:
+	    return state || [];
+	}
+
+	function doRecentRoll(state, action) {
 	    // Find the index of the expression in the existing list.
 	    var index = state.indexOf(action.expression);
 	    var newState;
@@ -74,8 +91,6 @@
 
 	    // Return the new state
 	    return newState;
-	default:
-	    return state || [];
 	}
     }
     
@@ -84,5 +99,6 @@
     exports.resultValue = resultValue;
     exports.input = input;
     exports.recentRolls = recentRolls;
+    exports.previousResult = previousResult;
     
 }(window.DiceReducers = {}));

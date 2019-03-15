@@ -41,7 +41,9 @@ function redisplay() {
     document.querySelector('#result-formula').textContent = state.resultFormula;
     // The value of the last result.
     document.querySelector('#result').textContent = state.resultValue;
-
+    // The value of the result history
+    document.querySelector('#prev-result').textContent = state.previousResult;
+    
     // Update the class if we have a result or not.
     document.querySelector('#result-header').classList.toggle('have-result', state.hasResult);
 
@@ -85,8 +87,11 @@ function storeState() {
 
 // Handle the roll button.
 document.querySelector('#roll').addEventListener('click', function() {
+
+    var state = store.getState();
+    
     // Get the current input
-    var expr = store.getState().input;
+    var expr = state.input;
 
     try {
 	// Parse the expression.
@@ -96,7 +101,7 @@ document.querySelector('#roll').addEventListener('click', function() {
 	var result = evalExpr(parsedExpr);
 
 	// Update the store with the results
-	store.dispatch(DiceActions.resultGenerated(result.value, result.str));
+	store.dispatch(DiceActions.resultGenerated(result.value, result.str, state.resultValue));
 
 	// Update the recent rolls list with the successful roll.
 	store.dispatch(DiceActions.recentRoll(expr));

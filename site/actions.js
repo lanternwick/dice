@@ -1,10 +1,11 @@
 (function(exports) {
 
-    function resultGenerated(value, formula) {
+    function resultGenerated(value, formula, prevValue) {
 	return {
 	    type: "RESULT_GENERATED",
 	    resultFormula: formula,
-	    resultValue: value
+	    resultValue: value,
+	    previousValue: prevValue
 	};
     }
 
